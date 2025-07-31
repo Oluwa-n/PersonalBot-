@@ -15,8 +15,8 @@ def play_alarm_sound():
 #current time
 def calender():
    now = datetime.now()
-   print("🕓 Current Time: ", now.strftime("%H:%M:%S"))
-   print("📆 Date: ",now.strftime("%Y-%m-%d"))
+   print("Current Time: ", now.strftime("%H:%M:%S"))
+   print("Date: ",now.strftime("%Y-%m-%d"))
 
 if os.path.exists(jsonFile):
         with open (jsonFile,"r") as file: 
@@ -34,15 +34,15 @@ if not data["username"]:
          data["username"] = username
          break
       else:
-         print("❌ Username must contain only letters and be 3 to 8 characters long.")
+         print("username must contain  only letters and be 3 to 8 characters long.")
    with open(jsonFile,"w") as file:
       json.dump(data, file, indent = 4)
    
-print(f"📆Your Alarm Bot Is Ready {data["username"]}")
+print(f"Your Alarm Bot Is Ready {data["username"]}")
 
 #watch my alarm
 def watch_alarm():
-    print("👀 Watching Your Alarms... Will keep repeating when it’s time!")
+    print("Watching Your Alarms... Will keep repeating when it’s time!")
 
     current_alarm = None  
 
@@ -66,7 +66,7 @@ def watch_alarm():
 
         if next_alarm and (current_alarm is None or next_alarm != current_alarm):
             current_alarm = next_alarm 
-            print(f"🔔 Alarm Started: {current_alarm['set_time']} - {current_alarm['set_label']}")
+            print(f" Alarm Started: {current_alarm['set_time']} - {current_alarm['set_label']}")
 
         if current_alarm:
             try:
@@ -78,11 +78,11 @@ def watch_alarm():
                     if stop == "quit":
                       break
             except Exception as tts_error:
-                print(f"⚠️ TTS error: {tts_error}")
+                print(f" TTS error: {tts_error}")
 
             now_check = datetime.now().strftime("%H:%M")
             if now_check != current_alarm["set_time"]:
-                print("⏭️ Moving to next alarm or waiting for next trigger...")
+                print(" Moving to next alarm or waiting for next trigger...")
                 current_alarm = None
 
         time.sleep(1)  
@@ -99,7 +99,7 @@ def add_alarm():
    while True:
       print("set your alarm below...")
       while True:
-          time = input("⏰ Enter your time in 24-hour format (HH:MM): ")
+          time = input(" Enter your time in 24-hour format (HH:MM): ")
           if re.fullmatch(r"^([01]\d|2[0-3]):([0-5]\d)$", time):
               label = input ("What do you at that moment: ")
               data["alarms"].append({
@@ -108,7 +108,7 @@ def add_alarm():
                })
               break
           else:
-              print("❌ Invalid time. Please use HH:MM format (e.g., 08:30, 14:45)")
+              print(" Invalid time. Please use HH:MM format (e.g., 08:30, 14:45)")
       with open(jsonFile,"w") as file:
          json.dump(data , file, indent=4)
          
@@ -134,12 +134,12 @@ def remove_alarm():
         data = {"username": "", "alarms": []}
 
     if not data["alarms"]:
-        print("❌ There is no alarm here.")
+        print(" There is no alarm here.")
         return
 
-    print("📂 Here are your saved alarms:")
+    print("Here are your saved alarms:")
     for i, alarm in enumerate(data["alarms"], start=1):
-        print(f"{i}. 🕓 {alarm['set_time']} - {alarm['set_label']}")
+        print(f"{i}.  {alarm['set_time']} - {alarm['set_label']}")
 
     try:
         remove = int(input("Enter the number of the alarm to remove: "))
@@ -147,13 +147,13 @@ def remove_alarm():
 
         if 1 <= remove <= total:
             deleted = data["alarms"].pop(remove - 1)
-            print(f"✅ Removed alarm: {deleted['set_time']} - {deleted['set_label']}")
+            print(f" Removed alarm: {deleted['set_time']} - {deleted['set_label']}")
             with open(jsonFile, "w") as file:
                 json.dump(data, file, indent=4)
         else:
-            print("❗ Invalid number. Please enter a valid alarm number.")
+            print(" Invalid number. Please enter a valid alarm number.")
     except ValueError:
-        print("❌ That is not a number. Please enter a valid number.")
+        print(" That is not a number. Please enter a valid number.")
     choose_exit_format = input("Return to main menu  (y/n) ").lower()
     if choose_exit_format == "y":
          print("Returning ...........")
@@ -174,11 +174,11 @@ def view_alarm():
         data = {"username":"","alarms":[]}
         
     if not data["alarms"]:
-         print("❌There is no alarm here")
+         print("There is no alarm here")
     else:
-         print("📂Here are your saved alarm")
+         print("Here are your saved alarm")
          for i,alarms in enumerate(data ["alarms"], start = 1):
-            print(f"{i}. 🕓 {alarms['set_time']} - {alarms['set_label']}")
+            print(f"{i}.  {alarms['set_time']} - {alarms['set_label']}")
             print("Those are the available alarm")
     choose_exit_format = input("Return to main menu  (y/n) ").lower()
     if choose_exit_format == "y":
@@ -225,14 +225,14 @@ def main_menu():
                 choices[userInput]()
                 return
           else:
-              print("❗Enter a valid number !")   
+              print("Enter a valid number !")   
       except ValueError:
-          print("❌ That is not a number ....")
+          print(" That is not a number ....")
 while True:
    main_menu()
-   ask = input("🔁 Do you want to return to the main menu? (y/n): ").lower()
+   ask = input(" Do you want to return to the main menu? (y/n): ").lower()
    if ask != 'y':
-        print("👋 Goodbye!")
+        print(" Goodbye!")
         break
         
 
